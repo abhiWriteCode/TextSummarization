@@ -1,3 +1,6 @@
+from time import time
+from requests import get, post
+from multiprocessing.pool import ThreadPool
 LONG_TEXT = """Quota politics is back in play to favour, this time, students from 
 government higher secondary schools in Tamil Nadu. The Cabinet’s nod on Monday, 
 for an ordinance to create a horizontal 7.5% reservation of the State’s 
@@ -19,25 +22,24 @@ The State’s latest decision comes in the backdrop of this factor and also of n
 
 max_length = 30
 
-from multiprocessing.pool import ThreadPool
-from requests import get, post
-from time import time
-
 
 def make_request(text):
-	# return get('http://127.0.0.1:5000/').json()
-	return post('http://127.0.0.1:5000/summary', data={'text': text, 'max_length': max_length}).json()
+    # return get('http://127.0.0.1:5000/').json()
+    return post('http://127.0.0.1:5000/summary', data={'text': text, 'max_length': max_length}).json()
+
 
 def async_request(n_request):
-	pool = ThreadPool()
-	result = pool.map_async(make_request, [LONG_TEXT for _ in range(n_request)]).get()
-	pool.close()
+    pool = ThreadPool()
+    result = pool.map_async(
+        make_request, [LONG_TEXT for _ in range(n_request)]).get()
+    pool.close()
+
 
 if __name__ == '__main__':
 
-	start_time = time()
+    start_time = time()
 
-	N_REQUEST = 2
-	async_request(n_request=N_REQUEST)
+    N_REQUEST = 2
+    async_request(n_request=N_REQUEST)
 
-	print(f'Required time for {N_REQUEST} requests: {time() - start_time:.2f}')
+    print(f'Required time for {N_REQUEST} requests: {time() - start_time:.2f}')
