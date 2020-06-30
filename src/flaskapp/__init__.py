@@ -1,6 +1,5 @@
 import os
 from flask import Flask
-from flask_restful import Api
 
 
 def create_app(test_config=None):
@@ -20,9 +19,8 @@ def create_app(test_config=None):
 	# except OSError:
 	# 	pass
 
-	from .api import Welcome, Summarizer
-	api = Api(app)
-	api.add_resource(Welcome, '/')
-	api.add_resource(Summarizer, '/summary')
+	from .api import add_resources
+	app = add_resources(app)
 
 	return app
+	
