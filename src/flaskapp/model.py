@@ -15,6 +15,6 @@ def get_summary(long_text, max_length):
     return summary_text
 
 
-# During testing
+## During testing
 # def get_summary(long_text, max_length):
 # 	return long_text[:max_length]
