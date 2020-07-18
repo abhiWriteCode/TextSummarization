@@ -24,15 +24,20 @@ max_length = 30
 
 
 def make_request(text):
-    # return get('http://127.0.0.1:5000/').json()
-    return post('http://127.0.0.1:5000/summary', data={'text': text, 'max_length': max_length}).json()
+    # r = get('http://127.0.0.1:5000/').json()
+    r = post('http://127.0.0.1:5000/summary', data={'text': text, 'max_length': max_length})
+
+    return (r.json(), r.status_code)
 
 
 def async_request(n_request):
     pool = ThreadPool()
     result = pool.map_async(
-        make_request, [LONG_TEXT for _ in range(n_request)]).get()
+        make_request, [LONG_TEXT for _ in range(n_request)]
+    )
     pool.close()
+
+    return result.get()
 
 
 if __name__ == '__main__':
@@ -40,6 +45,7 @@ if __name__ == '__main__':
     start_time = time()
 
     N_REQUEST = 2
-    async_request(n_request=N_REQUEST)
+    result = async_request(n_request=N_REQUEST)
 
+    print(result)
     print(f'Required time for {N_REQUEST} requests: {time() - start_time:.2f}')

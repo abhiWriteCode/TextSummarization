@@ -23,8 +23,8 @@
 Or
 
 ```bash
-$ curl http://localhost:5000/
+$ curl http://localhost:5000/ -v
 {'message': 'Welcome To TextSummarization.com'}
-$ curl http://localhost:5000/summary -d "text=This is very long article" -d "max_length=20" -X POST
+$ curl http://localhost:5000/summary -d "text=This is very long article" -d "max_length=20" -X POST -v
 {"summary_text": "This is very long ar"}
 ```
