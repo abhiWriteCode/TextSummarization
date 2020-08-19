@@ -1,10 +1,10 @@
 from transformers import pipeline
-
+import asyncio
 
 summarizer = pipeline(task='summarization')
 
 
-def get_summary(long_text, max_length):
+async def get_summary(long_text, max_length):
     summary = summarizer(
         long_text,
         max_length=max_length
@@ -15,6 +15,6 @@ def get_summary(long_text, max_length):
     return summary_text
 
 
-## During testing
-# def get_summary(long_text, max_length):
-# 	return long_text[:max_length]
+# # During testing
+# async def get_summary(long_text, max_length):
+#     return long_text[:max_length]
